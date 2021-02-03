@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import sys,os,json
+from typing import Text
 assert sys.version_info >= (3,9), "This script requires at least Python 3.9"
 
 def load(l):
@@ -15,17 +16,25 @@ def find_passage(game_desc, pid):
     return {}
 
 
-
 # ------------------------------------------------------
 
 def render(current):
-    pass
+    print(current["name"])
+    print(current["text"])
 
 def update(current, game_desc, choice):
+    if choice == "": 
+        return current
+    for l in current["links"]:
+        if l["name"] == choice:
+            current = find_passage(game_desc, l["pid"])
+            return current
+    print("i don't understand. Please try again.")
     return current
 
 def get_input(current):
-    return current
+    choice = input("what do you want to do? ")
+    return choice
 
 # ------------------------------------------------------
 
